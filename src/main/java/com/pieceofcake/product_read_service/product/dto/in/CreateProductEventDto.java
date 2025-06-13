@@ -1,5 +1,6 @@
 package com.pieceofcake.product_read_service.product.dto.in;
 
+import com.pieceofcake.product_read_service.kafka.event.CategoryNameEvent;
 import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
 import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
 import com.pieceofcake.product_read_service.product.entity.ProductStatus;
@@ -16,16 +17,16 @@ public class CreateProductEventDto {
     private String productName;
     private Long aiEstimatedPrice;
     private Long purchasePrice;
-    private ProductStatus productStatus;
+    private String productStatus;
     private String storageLocation;
     private String description;
     private List<CreateProductImageEventDto> images;
-    private Integer mainCategoryId;
-    private Integer subCategoryId;
+    private String mainCategoryName;
+    private String subCategoryName;
 
     @Builder
-    public CreateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, Long purchasePrice, ProductStatus productStatus, String storageLocation,
-                                 String description, List<CreateProductImageEventDto> images, Integer mainCategoryId, Integer subCategoryId) {
+    public CreateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, Long purchasePrice,
+                                 String productStatus, String storageLocation, String description, List<CreateProductImageEventDto> images, String mainCategoryName, String subCategoryName) {
         this.productUuid = productUuid;
         this.productName = productName;
         this.aiEstimatedPrice = aiEstimatedPrice;
@@ -34,11 +35,11 @@ public class CreateProductEventDto {
         this.storageLocation = storageLocation;
         this.description = description;
         this.images = images;
-        this.mainCategoryId = mainCategoryId;
-        this.subCategoryId = subCategoryId;
+        this.mainCategoryName = mainCategoryName;
+        this.subCategoryName = subCategoryName;
     }
 
-    public static CreateProductEventDto from(ProductReadEvent productReadEvent) {
+    public static CreateProductEventDto from(ProductReadEvent productReadEvent, CategoryNameEvent categoryNameEvent) {
         return CreateProductEventDto.builder()
                 .productUuid(productReadEvent.getProductUuid())
                 .productName(productReadEvent.getProductName())
@@ -48,8 +49,8 @@ public class CreateProductEventDto {
                 .storageLocation(productReadEvent.getStorageLocation())
                 .description(productReadEvent.getDescription())
                 .images(productReadEvent.getImages().stream().map(CreateProductImageEventDto::from).toList())
-                .mainCategoryId(productReadEvent.getMainCategoryId())
-                .subCategoryId(productReadEvent.getSubCategoryId())
+                .mainCategoryName(categoryNameEvent.getMainCategoryName())
+                .subCategoryName(categoryNameEvent.getSubCategoryName())
                 .build();
     }
 
@@ -63,8 +64,24 @@ public class CreateProductEventDto {
                 .storageLocation(storageLocation)
                 .description(description)
                 .images(images.stream().map(CreateProductImageEventDto::toEntity).toList())
-                .mainCategoryId(mainCategoryId)
-                .subCategoryId(subCategoryId)
+                .mainCategoryName(mainCategoryName)
+                .subCategoryName(subCategoryName)
+                .build();
+    }
+
+    public ProductReadMongoEntity toEntity(ProductReadMongoEntity entity) {
+        return ProductReadMongoEntity.builder()
+                .id(entity.getId())
+                .productUuid(productUuid)
+                .productName(productName)
+                .aiEstimatedPrice(aiEstimatedPrice)
+                .purchasePrice(purchasePrice)
+                .productStatus(productStatus)
+                .storageLocation(storageLocation)
+                .description(description)
+                .images(images.stream().map(CreateProductImageEventDto::toEntity).toList())
+                .mainCategoryName(mainCategoryName)
+                .subCategoryName(subCategoryName)
                 .build();
     }
 }
