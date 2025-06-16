@@ -22,6 +22,6 @@ public class ProductReadEvent {
     private String storageLocation;
     private String description;
     private List<ProductImageReadEvent> images;
-    private Integer mainCategoryId;
-    private Integer subCategoryId;
+    private CategoryReadEvent mainCategory;
+    private CategoryReadEvent subCategory;
 }

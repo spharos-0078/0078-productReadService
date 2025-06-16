@@ -1,6 +1,7 @@
 package com.pieceofcake.product_read_service.product.application;
 
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
+import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
 import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
 import com.pieceofcake.product_read_service.product.infrastructure.ProductReadMongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,11 @@ public class ProductReadServiceImpl implements ProductReadService {
     }
 
     @Override
-    public void updateProductRead(CreateProductEventDto createProductEventDto) {
-        ProductReadMongoEntity productRead = productReadMongoRepository.findByProductUuid(createProductEventDto.getProductUuid())
-                .orElseThrow(() -> new NoSuchElementException("No product found with UUID: " + createProductEventDto.getProductUuid()));
+    public void updateProductRead(UpdateProductEventDto updateProductEventDto) {
+        ProductReadMongoEntity productRead = productReadMongoRepository.findByProductUuid(updateProductEventDto.getProductUuid())
+                .orElseThrow(() -> new NoSuchElementException("No product found with UUID: " + updateProductEventDto.getProductUuid()));
 
-        productReadMongoRepository.save(createProductEventDto.toEntity(productRead));
+        productReadMongoRepository.save(updateProductEventDto.toEntity(productRead));
     }
 
     @Override

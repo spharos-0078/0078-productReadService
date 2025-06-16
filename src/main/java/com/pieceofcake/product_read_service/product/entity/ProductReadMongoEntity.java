@@ -22,13 +22,12 @@ public class ProductReadMongoEntity {
     private String storageLocation;
     private String description;
     private List<ProductReadImageEntity> images;
-    private String mainCategoryName; // category 이름
-    private String subCategoryName;
+    private CategoryReadEntity mainCategory;
+    private CategoryReadEntity subCategory;
 
     @Builder
-    public ProductReadMongoEntity(String id, String productName, String productUuid, Long aiEstimatedPrice,
-                                  Long purchasePrice, String productStatus, String storageLocation, String description,
-                                  List<ProductReadImageEntity> images, String mainCategoryName, String subCategoryName) {
+    public ProductReadMongoEntity(String id, String productName, String productUuid, Long aiEstimatedPrice, Long purchasePrice,
+                                  String productStatus, String storageLocation, String description, List<ProductReadImageEntity> images, CategoryReadEntity mainCategory, CategoryReadEntity subCategory) {
         this.id = id;
         this.productName = productName;
         this.productUuid = productUuid;
@@ -38,7 +37,7 @@ public class ProductReadMongoEntity {
         this.storageLocation = storageLocation;
         this.description = description;
         this.images = images;
-        this.mainCategoryName = mainCategoryName;
-        this.subCategoryName = subCategoryName;
+        this.mainCategory = mainCategory;
+        this.subCategory = subCategory;
     }
 }

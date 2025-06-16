@@ -1,9 +1,7 @@
 package com.pieceofcake.product_read_service.product.dto.in;
 
-import com.pieceofcake.product_read_service.kafka.event.CategoryNameEvent;
 import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
 import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
-import com.pieceofcake.product_read_service.product.entity.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +10,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class CreateProductEventDto {
+public class UpdateProductEventDto {
     private String productUuid;
     private String productName;
     private Long aiEstimatedPrice;
@@ -25,7 +23,7 @@ public class CreateProductEventDto {
     private CreateCategoryEventDto subCategory;
 
     @Builder
-    public CreateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, Long purchasePrice,
+    public UpdateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, Long purchasePrice,
                                  String productStatus, String storageLocation, String description, List<CreateProductImageEventDto> images, CreateCategoryEventDto mainCategory, CreateCategoryEventDto subCategory) {
         this.productUuid = productUuid;
         this.productName = productName;
@@ -39,23 +37,9 @@ public class CreateProductEventDto {
         this.subCategory = subCategory;
     }
 
-//    public static CreateProductEventDto from(ProductReadEvent productReadEvent, CategoryNameEvent categoryNameEvent) {
-//        return CreateProductEventDto.builder()
-//                .productUuid(productReadEvent.getProductUuid())
-//                .productName(productReadEvent.getProductName())
-//                .aiEstimatedPrice(productReadEvent.getAiEstimatedPrice())
-//                .purchasePrice(productReadEvent.getPurchasePrice())
-//                .productStatus(productReadEvent.getProductStatus())
-//                .storageLocation(productReadEvent.getStorageLocation())
-//                .description(productReadEvent.getDescription())
-//                .images(productReadEvent.getImages().stream().map(CreateProductImageEventDto::from).toList())
-//                .mainCategoryName(categoryNameEvent.getMainCategoryName())
-//                .subCategoryName(categoryNameEvent.getSubCategoryName())
-//                .build();
-//    }
 
-    public static CreateProductEventDto from(ProductReadEvent productReadEvent) {
-        return CreateProductEventDto.builder()
+    public static UpdateProductEventDto from(ProductReadEvent productReadEvent) {
+        return UpdateProductEventDto.builder()
                 .productUuid(productReadEvent.getProductUuid())
                 .productName(productReadEvent.getProductName())
                 .aiEstimatedPrice(productReadEvent.getAiEstimatedPrice())
@@ -69,8 +53,9 @@ public class CreateProductEventDto {
                 .build();
     }
 
-    public ProductReadMongoEntity toEntity() {
+    public ProductReadMongoEntity toEntity(ProductReadMongoEntity entity) {
         return ProductReadMongoEntity.builder()
+                .id(entity.getId())
                 .productUuid(productUuid)
                 .productName(productName)
                 .aiEstimatedPrice(aiEstimatedPrice)
