@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  board-service:
+    container_name: product-read-service
+    image: ${DOCKER_USERNAME}/product-read-service:latest
+    ports:
+      - "8090:8090"
+    env_file:
+      - .env
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true

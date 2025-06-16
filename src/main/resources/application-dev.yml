@@ -1,0 +1,23 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  data:
+    mongodb:
+      uri: mongodb+srv://${EC2_MONGOID}:${EC2_MONGOPW}@spharos.uxnx7ao.mongodb.net/piece_of_cake?retryWrites=true&w=majority
+      auto-index-creation: true
+
+  kafka:
+    bootstrap-servers: ${EC2_HOST2}:10000,${EC2_HOST2}:10001,${EC2_HOST2}:10002
+    consumer:
+      group-id: product-read-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${EC2_HOST}:8761/eureka/
