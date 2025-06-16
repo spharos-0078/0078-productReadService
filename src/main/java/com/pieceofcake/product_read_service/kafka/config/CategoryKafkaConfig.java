@@ -1,5 +1,6 @@
 package com.pieceofcake.product_read_service.kafka.config;
 
+import com.pieceofcake.product_read_service.kafka.event.CategoryNameEvent;
 import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -18,39 +19,38 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
-public class KafkaConfig {
+public class CategoryKafkaConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServer;
 
     @Bean
-    public Map<String, Object> productConsumerConfigs() {
+    public Map<String, Object> categoryConsumerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "product-read-group");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, ProductReadEvent.class);
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, CategoryNameEvent.class);
 
         return props;
     }
 
     @Bean
-    public ConsumerFactory<String, ProductReadEvent> productReadEventConsumerFactory() {
+    public ConsumerFactory<String, CategoryNameEvent> categoryNameReadEventConsumerFactory() {
         return new DefaultKafkaConsumerFactory<>(
-                productConsumerConfigs(),
+                categoryConsumerConfigs(),
                 new StringDeserializer(),
-                new ErrorHandlingDeserializer<>(new JsonDeserializer<>(ProductReadEvent.class, false))
+                new ErrorHandlingDeserializer<>(new JsonDeserializer<>(CategoryNameEvent.class, false))
         );
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, ProductReadEvent> productReadEventListener() {
-        ConcurrentKafkaListenerContainerFactory<String, ProductReadEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(productReadEventConsumerFactory());
+    public ConcurrentKafkaListenerContainerFactory<String, CategoryNameEvent> categoryNameReadEventListener() {
+        ConcurrentKafkaListenerContainerFactory<String, CategoryNameEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(categoryNameReadEventConsumerFactory());
 
         return factory;
     }
-
 }

@@ -18,16 +18,16 @@ public class ProductReadMongoEntity {
     private String productUuid;
     private Long aiEstimatedPrice;
     private Long purchasePrice;
-    private ProductStatus productStatus; // String
+    private String productStatus;
     private String storageLocation;
     private String description;
     private List<ProductReadImageEntity> images;
-    private Integer mainCategoryId; // category 이름
-    private Integer subCategoryId;
+    private CategoryReadEntity mainCategory;
+    private CategoryReadEntity subCategory;
 
     @Builder
     public ProductReadMongoEntity(String id, String productName, String productUuid, Long aiEstimatedPrice, Long purchasePrice,
-                                  ProductStatus productStatus, String storageLocation, String description, List<ProductReadImageEntity> images, Integer mainCategoryId, Integer subCategoryId) {
+                                  String productStatus, String storageLocation, String description, List<ProductReadImageEntity> images, CategoryReadEntity mainCategory, CategoryReadEntity subCategory) {
         this.id = id;
         this.productName = productName;
         this.productUuid = productUuid;
@@ -37,7 +37,7 @@ public class ProductReadMongoEntity {
         this.storageLocation = storageLocation;
         this.description = description;
         this.images = images;
-        this.mainCategoryId = mainCategoryId;
-        this.subCategoryId = subCategoryId;
+        this.mainCategory = mainCategory;
+        this.subCategory = subCategory;
     }
 }

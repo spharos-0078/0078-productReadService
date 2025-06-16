@@ -3,6 +3,7 @@ package com.pieceofcake.product_read_service.kafka.controller;
 import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
 import com.pieceofcake.product_read_service.product.application.ProductReadServiceImpl;
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
+import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,12 +15,24 @@ import org.springframework.stereotype.Component;
 public class KafkaConsumerController {
 
     private final ProductReadServiceImpl productReadService;
-//    private final ConcurrentHashMap<String, CompletableFuture<ProductReadEvent>> productEventFutureMap = new ConcurrentHashMap<>();
 
-    @KafkaListener(topics = "create-product-send-read", groupId = "product-read-group", containerFactory = "productReadEventListener")
-    public void consumeProductReadEvent(ProductReadEvent productReadEvent) {
-        log.info("get topic {}", productReadEvent);
+    @KafkaListener(topics = "create-product", groupId = "product-read-group", containerFactory = "productReadEventListener")
+    public void consumeCreateProductReadEvent(ProductReadEvent productReadEvent) {
+        log.info("Received product Create event: {}", productReadEvent);
         productReadService.createProductRead(CreateProductEventDto.from(productReadEvent));
+    }
+
+    @KafkaListener(topics = "update-product", groupId = "product-read-group", containerFactory = "productReadEventListener")
+    public void consumeUpdateProductReadEvent(ProductReadEvent productReadEvent) {
+        log.info("Received product Update event: {}", productReadEvent);
+        productReadService.updateProductRead(UpdateProductEventDto.from(productReadEvent));
+    }
+
+
+    @KafkaListener(topics = "delete-product", groupId = "product-read-group", containerFactory = "productReadEventListener")
+    public void consumeDeleteProductReadEvent(ProductReadEvent event) {
+        log.info("Received DELETE event: {}", event);
+        productReadService.deleteProductRead(event.getProductUuid());
     }
 }
 
