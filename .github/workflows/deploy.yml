@@ -84,6 +84,9 @@ jobs:
             docker compose down || true
             docker rm -f product-read-service || true
 
+            echo "[✔] 오래된 이미지 정리(24시간 이상)"
+            docker image prune -a -f --filter "until=24h"
+
             echo "[✔] 이미지 pull 및 컨테이너 재시작"
             docker compose pull
             docker compose up -d
