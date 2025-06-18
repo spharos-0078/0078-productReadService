@@ -1,5 +1,8 @@
 package com.pieceofcake.product_read_service.kafka.controller;
 
+import com.pieceofcake.product_read_service.funding.application.FundingReadService;
+import com.pieceofcake.product_read_service.funding.dto.in.CreateFundingEventDto;
+import com.pieceofcake.product_read_service.kafka.event.FundingReadEvent;
 import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
 import com.pieceofcake.product_read_service.product.application.ProductReadServiceImpl;
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class KafkaConsumerController {
 
     private final ProductReadServiceImpl productReadService;
+    private final FundingReadService fundingReadService;
 
     @KafkaListener(topics = "create-product", groupId = "product-read-group", containerFactory = "productReadEventListener")
     public void consumeCreateProductReadEvent(ProductReadEvent productReadEvent) {
@@ -34,5 +38,16 @@ public class KafkaConsumerController {
         log.info("Received DELETE event: {}", event);
         productReadService.deleteProductRead(event.getProductUuid());
     }
-}
 
+    @KafkaListener(topics = "create-funding", groupId = "create-funding-read-group", containerFactory = "fundingReadEventListener")
+    public void consumeCreateFundingReadEvent(FundingReadEvent event) {
+        log.info("Received CREATE FUNDING event: {}", event);
+        fundingReadService.createFundingRead(CreateFundingEventDto.from(event));
+    }
+
+    @KafkaListener(topics = "delete-funding", groupId = "delete-funding-read-group", containerFactory = "fundingReadEventListener")
+    public void consumeDeleteFundingReadEvent(FundingReadEvent event) {
+        log.info("Received DELETE FUNDING PRODUCT-UUID: {}", event.getProductUuid());
+        fundingReadService.deleteFundingRead(event.getProductUuid());
+    }
+}
