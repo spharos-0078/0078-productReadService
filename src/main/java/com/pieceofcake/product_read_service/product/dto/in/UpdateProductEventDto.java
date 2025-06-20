@@ -14,6 +14,7 @@ public class UpdateProductEventDto {
     private String productUuid;
     private String productName;
     private Long aiEstimatedPrice;
+    private String aiEstimatedDescription;
     private Long purchasePrice;
     private String productStatus;
     private String storageLocation;
@@ -23,11 +24,12 @@ public class UpdateProductEventDto {
     private CreateCategoryEventDto subCategory;
 
     @Builder
-    public UpdateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, Long purchasePrice,
-                                 String productStatus, String storageLocation, String description, List<CreateProductImageEventDto> images, CreateCategoryEventDto mainCategory, CreateCategoryEventDto subCategory) {
+    public UpdateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, String aiEstimatedDescription,
+                                 Long purchasePrice, String productStatus, String storageLocation, String description, List<CreateProductImageEventDto> images, CreateCategoryEventDto mainCategory, CreateCategoryEventDto subCategory) {
         this.productUuid = productUuid;
         this.productName = productName;
         this.aiEstimatedPrice = aiEstimatedPrice;
+        this.aiEstimatedDescription = aiEstimatedDescription;
         this.purchasePrice = purchasePrice;
         this.productStatus = productStatus;
         this.storageLocation = storageLocation;
@@ -43,6 +45,7 @@ public class UpdateProductEventDto {
                 .productUuid(productReadEvent.getProductUuid())
                 .productName(productReadEvent.getProductName())
                 .aiEstimatedPrice(productReadEvent.getAiEstimatedPrice())
+                .aiEstimatedDescription(productReadEvent.getAiEstimatedDescription())
                 .purchasePrice(productReadEvent.getPurchasePrice())
                 .productStatus(productReadEvent.getProductStatus())
                 .storageLocation(productReadEvent.getStorageLocation())
@@ -59,6 +62,7 @@ public class UpdateProductEventDto {
                 .productUuid(productUuid)
                 .productName(productName)
                 .aiEstimatedPrice(aiEstimatedPrice)
+                .aiEstimatedDescription(aiEstimatedDescription)
                 .purchasePrice(purchasePrice)
                 .productStatus(productStatus)
                 .storageLocation(storageLocation)

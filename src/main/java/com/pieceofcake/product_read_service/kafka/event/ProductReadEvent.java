@@ -17,6 +17,7 @@ public class ProductReadEvent {
     private String productUuid;
     private String productName;
     private Long aiEstimatedPrice;
+    private String aiEstimatedDescription;
     private Long purchasePrice;
     private String productStatus;
     private String storageLocation;

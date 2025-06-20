@@ -9,17 +9,18 @@ import java.util.List;
 public class GetProductDetailResponseVo {
     private String productName;
     private Long aiEstimatedPrice;
+    private String aiEstimatedDescription;
     private String description;
     private List<GetProductImageResponseVo> images;
     private GetCategoryResponseVo mainCategory;
     private GetCategoryResponseVo subCategory;
 
     @Builder
-    public GetProductDetailResponseVo(String productName, Long aiEstimatedPrice, String description,
-                                      List<GetProductImageResponseVo> images, GetCategoryResponseVo mainCategory,
-                                      GetCategoryResponseVo subCategory) {
+    public GetProductDetailResponseVo(String productName, Long aiEstimatedPrice, String aiEstimatedDescription, String description,
+                                      List<GetProductImageResponseVo> images, GetCategoryResponseVo mainCategory, GetCategoryResponseVo subCategory) {
         this.productName = productName;
         this.aiEstimatedPrice = aiEstimatedPrice;
+        this.aiEstimatedDescription = aiEstimatedDescription;
         this.description = description;
         this.images = images;
         this.mainCategory = mainCategory;
