@@ -20,20 +20,20 @@ public class KafkaConsumerController {
     private final ProductReadServiceImpl productReadService;
     private final FundingReadService fundingReadService;
 
-    @KafkaListener(topics = "create-product", groupId = "product-read-group", containerFactory = "productReadEventListener")
+    @KafkaListener(topics = "create-product", groupId = "create-product-read-group", containerFactory = "productReadEventListener")
     public void consumeCreateProductReadEvent(ProductReadEvent productReadEvent) {
         log.info("Received product Create event: {}", productReadEvent);
         productReadService.createProductRead(CreateProductEventDto.from(productReadEvent));
     }
 
-    @KafkaListener(topics = "update-product", groupId = "product-read-group", containerFactory = "productReadEventListener")
+    @KafkaListener(topics = "update-product", groupId = "update-product-read-group", containerFactory = "productReadEventListener")
     public void consumeUpdateProductReadEvent(ProductReadEvent productReadEvent) {
         log.info("Received product Update event: {}", productReadEvent);
         productReadService.updateProductRead(UpdateProductEventDto.from(productReadEvent));
     }
 
 
-    @KafkaListener(topics = "delete-product", groupId = "product-read-group", containerFactory = "productReadEventListener")
+    @KafkaListener(topics = "delete-product", groupId = "delete-product-read-group", containerFactory = "productReadEventListener")
     public void consumeDeleteProductReadEvent(ProductReadEvent event) {
         log.info("Received DELETE event: {}", event);
         productReadService.deleteProductRead(event.getProductUuid());

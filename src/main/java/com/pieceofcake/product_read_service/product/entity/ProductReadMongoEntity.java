@@ -18,6 +18,7 @@ public class ProductReadMongoEntity {
     private String productName;
     private String productUuid;
     private Long aiEstimatedPrice;
+    private String aiEstimatedDescription;
     private Long purchasePrice;
     private String productStatus;
     private String storageLocation;
@@ -28,13 +29,14 @@ public class ProductReadMongoEntity {
     private FundingRead fundingRead;
 
     @Builder
-    public ProductReadMongoEntity(String id, String productName, String productUuid, Long aiEstimatedPrice, Long purchasePrice,
-                                  String productStatus, String storageLocation, String description, List<ProductReadImageEntity> images,
-                                  CategoryReadEntity mainCategory, CategoryReadEntity subCategory, FundingRead fundingRead) {
+    public ProductReadMongoEntity(String id, String productName, String productUuid, Long aiEstimatedPrice, String aiEstimatedDescription,
+                                  Long purchasePrice, String productStatus, String storageLocation, String description,
+                                  List<ProductReadImageEntity> images, CategoryReadEntity mainCategory, CategoryReadEntity subCategory,  FundingRead fundingRead) {
         this.id = id;
         this.productName = productName;
         this.productUuid = productUuid;
         this.aiEstimatedPrice = aiEstimatedPrice;
+        this.aiEstimatedDescription = aiEstimatedDescription;
         this.purchasePrice = purchasePrice;
         this.productStatus = productStatus;
         this.storageLocation = storageLocation;
