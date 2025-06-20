@@ -96,6 +96,10 @@ public enum BaseResponseStatus {
     INVALID_CART_ACCESS(HttpStatus.BAD_REQUEST, false, 3102, "유효하지 않거나 접근 권한이 없는 장바구니 항목입니다."),
     DUPLICATE_CART_OPTION(HttpStatus.CONFLICT, false, 3103, "이미 동일한 옵션의 상품이 장바구니에 존재합니다."),
 
+    
+    //Funding
+    NO_EXIST_FUNDING(HttpStatus.NOT_FOUND, false, 3200, "존재하지 않는 공모입니다"),
+    
     /**
      * 4000: comment service error
      */
