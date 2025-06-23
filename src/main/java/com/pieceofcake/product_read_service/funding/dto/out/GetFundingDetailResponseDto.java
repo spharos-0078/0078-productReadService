@@ -4,18 +4,15 @@ import com.pieceofcake.product_read_service.funding.vo.out.GetFundingDetailRespo
 import com.pieceofcake.product_read_service.product.dto.out.GetCategoryResponseDto;
 import com.pieceofcake.product_read_service.product.dto.out.GetProductImageResponseDto;
 import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
-import com.pieceofcake.product_read_service.product.vo.out.GetCategoryResponseVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
 public class GetFundingDetailResponseDto {
-    //카테고리0 상품명0 상품설명0 ai가격0 ai가격설명0 이미지0
     private String productUuid;
     private GetCategoryResponseDto mainCategory;
     private GetCategoryResponseDto subCategory;
