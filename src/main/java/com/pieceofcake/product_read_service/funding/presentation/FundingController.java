@@ -5,9 +5,8 @@ import com.pieceofcake.product_read_service.funding.application.FundingReadServi
 import com.pieceofcake.product_read_service.funding.dto.in.FundingFilterRequestDto;
 import com.pieceofcake.product_read_service.funding.entity.SortBy;
 import com.pieceofcake.product_read_service.funding.vo.out.GetFundingDetailResponseVo;
-import com.pieceofcake.product_read_service.funding.vo.out.GetFundingResponseVo;
+import com.pieceofcake.product_read_service.funding.vo.out.GetFundingUuidListResponseVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,7 +20,7 @@ public class FundingController {
     private final FundingReadService fundingReadService;
 
     @GetMapping("/list")
-    public BaseResponseEntity<Page<String>> getFundingFilterUuid(
+    public BaseResponseEntity<GetFundingUuidListResponseVo> getFundingFilterUuid(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String main,
@@ -39,7 +38,7 @@ public class FundingController {
                 .name(name)
                 .pageable(pageable)
                 .build()
-        ));
+        ).toVo());
     }
 
     @GetMapping("/list/{fundingUuid}")
