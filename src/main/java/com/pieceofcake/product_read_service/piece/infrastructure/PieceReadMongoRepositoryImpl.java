@@ -1,0 +1,56 @@
+package com.pieceofcake.product_read_service.piece.infrastructure;
+
+import com.pieceofcake.product_read_service.piece.dto.in.GetPieceFilterRequestDto;
+import com.pieceofcake.product_read_service.product.entity.ProductRead;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@Repository
+public class PieceReadMongoRepositoryImpl implements PieceReadMongoRepository {
+    private final MongoTemplate mongoTemplate;
+
+    @Override
+    public Page<ProductRead> searchPieceProductWithFilters(GetPieceFilterRequestDto dto) {
+        Query query = new Query();
+
+        query.addCriteria(Criteria.where("pieceRead").ne(null));
+
+        if (dto.getMain() != null && !dto.getMain().isEmpty()) {
+            query.addCriteria(Criteria.where("mainCategory.categoryName").is(dto.getMain()));
+        }
+        if (dto.getSub() != null && !dto.getSub().isEmpty()) {
+            query.addCriteria(Criteria.where("subCategory.categoryName").is(dto.getSub()));
+        }
+        if (dto.getName() != null && !dto.getName().isEmpty()) {
+            query.addCriteria(Criteria.where("productName").regex(dto.getName(), "i")); // 대소문자 무시
+        }
+
+//        // 정렬 정보 적용
+//        if (dto.getPageable().getSort().isSorted()) {
+//            for (Sort.Order order : dto.getPageable().getSort()) {
+//                query.with(Sort.by(order));
+//            }
+//        }
+
+        // 정렬
+        if (dto.getPageable().getSort().isSorted()) {
+            query.with(dto.getPageable().getSort());
+        }
+
+        long total = mongoTemplate.count(query, ProductRead.class);
+
+        query.with(dto.getPageable());
+        List<ProductRead> list = mongoTemplate.find(query, ProductRead.class);
+
+        return new PageImpl<>(list, dto.getPageable(), total);
+    }
+}
