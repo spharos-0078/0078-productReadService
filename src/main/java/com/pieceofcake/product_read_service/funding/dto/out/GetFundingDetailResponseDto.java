@@ -3,14 +3,12 @@ package com.pieceofcake.product_read_service.funding.dto.out;
 import com.pieceofcake.product_read_service.funding.vo.out.GetFundingDetailResponseVo;
 import com.pieceofcake.product_read_service.product.dto.out.GetCategoryResponseDto;
 import com.pieceofcake.product_read_service.product.dto.out.GetProductImageResponseDto;
-import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
-import com.pieceofcake.product_read_service.product.vo.out.GetCategoryResponseVo;
+import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -49,7 +47,7 @@ public class GetFundingDetailResponseDto {
         this.funding = funding;
     }
 
-    public static GetFundingDetailResponseDto from(ProductReadMongoEntity entity){
+    public static GetFundingDetailResponseDto from(ProductRead entity){
         return GetFundingDetailResponseDto.builder()
                 .productUuid(entity.getProductUuid())
                 .mainCategory(GetCategoryResponseDto.from(entity.getMainCategory()))

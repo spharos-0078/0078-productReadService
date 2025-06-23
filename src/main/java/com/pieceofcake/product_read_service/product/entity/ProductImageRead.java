@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @NoArgsConstructor
 @Document(collection = "product_image_read")
-public class ProductReadImageEntity {
+public class ProductImageRead {
     @Id
     private String id;
     private String imageUrl;
@@ -17,7 +17,7 @@ public class ProductReadImageEntity {
     private Boolean isThumbnail;
 
     @Builder
-    public ProductReadImageEntity(String id, String imageUrl, Integer imageIndex, Boolean isThumbnail) {
+    public ProductImageRead(String id, String imageUrl, Integer imageIndex, Boolean isThumbnail) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.imageIndex = imageIndex;

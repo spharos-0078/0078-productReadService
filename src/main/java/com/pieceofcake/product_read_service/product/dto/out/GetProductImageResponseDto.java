@@ -1,6 +1,6 @@
 package com.pieceofcake.product_read_service.product.dto.out;
 
-import com.pieceofcake.product_read_service.product.entity.ProductReadImageEntity;
+import com.pieceofcake.product_read_service.product.entity.ProductImageRead;
 import com.pieceofcake.product_read_service.product.vo.out.GetProductImageResponseVo;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class GetProductImageResponseDto {
         this.isThumbnail = isThumbnail;
     }
 
-    public static GetProductImageResponseDto from(ProductReadImageEntity productReadImage){
+    public static GetProductImageResponseDto from(ProductImageRead productReadImage){
         return GetProductImageResponseDto.builder()
                 .imageIndex(productReadImage.getImageIndex())
                 .imageUrl(productReadImage.getImageUrl())

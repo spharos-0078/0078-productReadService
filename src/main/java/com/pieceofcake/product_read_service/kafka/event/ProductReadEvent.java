@@ -1,6 +1,5 @@
 package com.pieceofcake.product_read_service.kafka.event;
 
-import com.pieceofcake.product_read_service.product.entity.ProductStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

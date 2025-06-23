@@ -1,6 +1,6 @@
 package com.pieceofcake.product_read_service.product.dto.out;
 
-import com.pieceofcake.product_read_service.product.entity.CategoryReadEntity;
+import com.pieceofcake.product_read_service.product.entity.CategoryRead;
 import com.pieceofcake.product_read_service.product.vo.out.GetCategoryResponseVo;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +16,7 @@ public class GetCategoryResponseDto {
         this.categoryName = categoryName;
     }
 
-    public static GetCategoryResponseDto from(CategoryReadEntity mainCategory) {
+    public static GetCategoryResponseDto from(CategoryRead mainCategory) {
         return GetCategoryResponseDto.builder()
                 .categoryId(mainCategory.getCategoryId())
                 .categoryName(mainCategory.getCategoryName())

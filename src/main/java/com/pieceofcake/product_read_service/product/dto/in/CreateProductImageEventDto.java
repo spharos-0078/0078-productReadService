@@ -1,7 +1,7 @@
 package com.pieceofcake.product_read_service.product.dto.in;
 
 import com.pieceofcake.product_read_service.kafka.event.ProductImageReadEvent;
-import com.pieceofcake.product_read_service.product.entity.ProductReadImageEntity;
+import com.pieceofcake.product_read_service.product.entity.ProductImageRead;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,8 @@ public class CreateProductImageEventDto {
                 .build();
     }
 
-    public ProductReadImageEntity toEntity() {
-        return ProductReadImageEntity.builder()
+    public ProductImageRead toEntity() {
+        return ProductImageRead.builder()
                 .imageUrl(imageUrl)
                 .imageIndex(imageIndex)
                 .isThumbnail(isThumbnail)

@@ -1,7 +1,7 @@
 package com.pieceofcake.product_read_service.product.dto.in;
 
 import com.pieceofcake.product_read_service.kafka.event.CategoryReadEvent;
-import com.pieceofcake.product_read_service.product.entity.CategoryReadEntity;
+import com.pieceofcake.product_read_service.product.entity.CategoryRead;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +27,8 @@ public class CreateCategoryEventDto {
                 .build();
     }
 
-    public CategoryReadEntity toEntity(){
-        return CategoryReadEntity.builder()
+    public CategoryRead toEntity(){
+        return CategoryRead.builder()
                 .categoryId(categoryId)
                 .categoryName(categoryName)
                 .build();

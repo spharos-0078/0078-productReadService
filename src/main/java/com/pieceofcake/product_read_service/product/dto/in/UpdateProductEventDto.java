@@ -1,7 +1,7 @@
 package com.pieceofcake.product_read_service.product.dto.in;
 
 import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
-import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
+import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,8 +56,8 @@ public class UpdateProductEventDto {
                 .build();
     }
 
-    public ProductReadMongoEntity toEntity(ProductReadMongoEntity entity) {
-        return ProductReadMongoEntity.builder()
+    public ProductRead toEntity(ProductRead entity) {
+        return ProductRead.builder()
                 .id(entity.getId())
                 .productUuid(productUuid)
                 .productName(productName)

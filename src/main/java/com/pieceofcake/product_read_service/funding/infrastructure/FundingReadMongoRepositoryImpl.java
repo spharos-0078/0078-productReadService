@@ -1,7 +1,7 @@
 package com.pieceofcake.product_read_service.funding.infrastructure;
 
 import com.pieceofcake.product_read_service.funding.dto.in.FundingFilterRequestDto;
-import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
+import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,7 +18,7 @@ public class FundingReadMongoRepositoryImpl implements FundingReadMongoRepositor
     private final MongoTemplate mongoTemplate;
 
     @Override
-    public Page<ProductReadMongoEntity> searchWithFilters(FundingFilterRequestDto dto) {
+    public Page<ProductRead> searchWithFilters(FundingFilterRequestDto dto) {
         Query query = new Query();
 
         query.addCriteria(Criteria.where("fundingRead").ne(null));
@@ -41,10 +41,10 @@ public class FundingReadMongoRepositoryImpl implements FundingReadMongoRepositor
             }
         }
 
-        long total = mongoTemplate.count(query, ProductReadMongoEntity.class);
+        long total = mongoTemplate.count(query, ProductRead.class);
         query.with(dto.getPageable());
 
-        List<ProductReadMongoEntity> list = mongoTemplate.find(query, ProductReadMongoEntity.class);
+        List<ProductRead> list = mongoTemplate.find(query, ProductRead.class);
         return new PageImpl<>(list, dto.getPageable(), total);
     }
 }
