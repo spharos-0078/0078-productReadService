@@ -2,8 +2,13 @@ package com.pieceofcake.product_read_service.kafka.controller;
 
 import com.pieceofcake.product_read_service.funding.application.FundingReadService;
 import com.pieceofcake.product_read_service.funding.dto.in.CreateFundingEventDto;
+import com.pieceofcake.product_read_service.kafka.event.BatchReadEvent;
 import com.pieceofcake.product_read_service.kafka.event.FundingReadEvent;
+import com.pieceofcake.product_read_service.kafka.event.PieceReadEvent;
 import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
+import com.pieceofcake.product_read_service.piece.application.PieceReadServiceImpl;
+import com.pieceofcake.product_read_service.piece.dto.in.CreateBatchEventDto;
+import com.pieceofcake.product_read_service.piece.dto.in.CreatePieceEventDto;
 import com.pieceofcake.product_read_service.product.application.ProductReadServiceImpl;
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
 import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
@@ -19,6 +24,7 @@ public class KafkaConsumerController {
 
     private final ProductReadServiceImpl productReadService;
     private final FundingReadService fundingReadService;
+    private final PieceReadServiceImpl pieceReadService;
 
     @KafkaListener(topics = "create-product", groupId = "create-product-read-group", containerFactory = "productReadEventListener")
     public void consumeCreateProductReadEvent(ProductReadEvent productReadEvent) {
@@ -31,7 +37,6 @@ public class KafkaConsumerController {
         log.info("Received product Update event: {}", productReadEvent);
         productReadService.updateProductRead(UpdateProductEventDto.from(productReadEvent));
     }
-
 
     @KafkaListener(topics = "delete-product", groupId = "delete-product-read-group", containerFactory = "productReadEventListener")
     public void consumeDeleteProductReadEvent(ProductReadEvent event) {
@@ -49,5 +54,17 @@ public class KafkaConsumerController {
     public void consumeDeleteFundingReadEvent(FundingReadEvent event) {
         log.info("Received DELETE FUNDING PRODUCT-UUID: {}", event.getProductUuid());
         fundingReadService.deleteFundingRead(event.getProductUuid());
+    }
+
+    @KafkaListener(topics = "create-piece-product", groupId = "create-piece-read-group", containerFactory = "pieceReadEventListener")
+    public void consumeCreatePieceReadEvent(PieceReadEvent event) {
+        log.info("Received CREATE PIECE PRODUCT event: {}", event.getPieceProductUuid());
+        pieceReadService.createPieceRead(CreatePieceEventDto.from(event));
+    }
+
+    @KafkaListener(topics = "update-batch", groupId = "update-batch-group", containerFactory = "batchReadEventListener")
+    public void consumeCreatePieceReadEvent(BatchReadEvent event) {
+        log.info("Received UPDATE PIECE BATCH event: {}", event.getPieceProductUuid());
+        pieceReadService.createPieceBatchRead(CreateBatchEventDto.from(event));
     }
 }
