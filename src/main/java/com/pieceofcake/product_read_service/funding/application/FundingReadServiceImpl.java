@@ -6,6 +6,7 @@ import com.pieceofcake.product_read_service.funding.dto.in.CreateFundingEventDto
 import com.pieceofcake.product_read_service.funding.dto.in.FundingFilterRequestDto;
 import com.pieceofcake.product_read_service.funding.dto.out.GetFundingDetailResponseDto;
 import com.pieceofcake.product_read_service.product.entity.ProductRead;
+import com.pieceofcake.product_read_service.funding.dto.out.GetFundingUuidListResponseDto;
 import com.pieceofcake.product_read_service.product.infrastructure.ProductReadMongoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,9 @@ public class FundingReadServiceImpl implements FundingReadService {
     private final ProductReadMongoRepository productReadMongoRepository;
 
     @Override
-    public Page<String> getFundingFilterUuid(FundingFilterRequestDto fundingFilterRequestDto) {
-        return productReadMongoRepository.searchWithFilters(fundingFilterRequestDto)
-                .map(entity->entity.getFundingRead().getFundingUuid());
+    public GetFundingUuidListResponseDto getFundingFilterUuid(FundingFilterRequestDto fundingFilterRequestDto) {
+        return GetFundingUuidListResponseDto.from(productReadMongoRepository.searchWithFilters(fundingFilterRequestDto)
+                .map(entity->entity.getFundingRead().getFundingUuid()));
     }
 
     @Override

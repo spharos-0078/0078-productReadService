@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class GetFundingDetailResponseDto {
-    //카테고리0 상품명0 상품설명0 ai가격0 ai가격설명0 이미지0
     private String productUuid;
     private GetCategoryResponseDto mainCategory;
     private GetCategoryResponseDto subCategory;
