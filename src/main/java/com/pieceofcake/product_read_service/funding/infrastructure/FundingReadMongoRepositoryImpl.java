@@ -5,10 +5,10 @@ import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -44,5 +44,12 @@ public class FundingReadMongoRepositoryImpl implements FundingReadMongoRepositor
 
         List<ProductRead> list = mongoTemplate.find(query, ProductRead.class);
         return new PageImpl<>(list, dto.getPageable(), total);
+    }
+
+    @Override
+    public void updateRemainPieces(String fundingUuid, int remainPieces) {
+        Query query = new Query(Criteria.where("fundingRead.fundingUuid").is(fundingUuid));
+        Update update = new Update().set("fundingRead.remainPieces", remainPieces);
+        mongoTemplate.updateFirst(query, update, ProductRead.class);
     }
 }

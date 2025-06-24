@@ -4,13 +4,13 @@ import com.pieceofcake.product_read_service.common.entity.BaseResponseStatus;
 import com.pieceofcake.product_read_service.common.exception.BaseException;
 import com.pieceofcake.product_read_service.funding.dto.in.CreateFundingEventDto;
 import com.pieceofcake.product_read_service.funding.dto.in.FundingFilterRequestDto;
+import com.pieceofcake.product_read_service.funding.dto.in.UpdateRemainPiecesEventDto;
 import com.pieceofcake.product_read_service.funding.dto.out.GetFundingDetailResponseDto;
 import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import com.pieceofcake.product_read_service.funding.dto.out.GetFundingUuidListResponseDto;
 import com.pieceofcake.product_read_service.product.infrastructure.ProductReadMongoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -33,13 +33,6 @@ public class FundingReadServiceImpl implements FundingReadService {
     }
 
 
-//    @Override
-//    public void getFundingRead(String uuid) {
-//        ProductReadMongoEntity product = productReadMongoRepository.findByProductUuid(uuid)
-//                .orElseThrow(() -> new IllegalArgumentException("No product found with UUID:"+uuid ));
-//        System.out.println(product.toString());
-//    }
-
     @Override
     public void createFundingRead(CreateFundingEventDto createFundingEventDto) {
         ProductRead product = productReadMongoRepository.findByProductUuid(createFundingEventDto.getProductUuid())
@@ -55,5 +48,11 @@ public class FundingReadServiceImpl implements FundingReadService {
 
         product.createFundingRead(null);
         productReadMongoRepository.save(product);
+    }
+
+    @Override
+    public void updateRemainPieces(UpdateRemainPiecesEventDto updateRemainPiecesEventDto) {
+        productReadMongoRepository.updateRemainPieces(updateRemainPiecesEventDto.getFundingUuid(),
+                updateRemainPiecesEventDto.getRemainPieces());
     }
 }
