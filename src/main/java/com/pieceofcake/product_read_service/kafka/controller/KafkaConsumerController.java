@@ -62,7 +62,7 @@ public class KafkaConsumerController {
         pieceReadService.createPieceRead(CreatePieceEventDto.from(event));
     }
 
-    @KafkaListener(topics = "update-batch", groupId = "update-batch-group", containerFactory = "batchReadEventListener")
+    @KafkaListener(topics = "daily-piece-trade", groupId = "update-batch-group", containerFactory = "batchReadEventListener")
     public void consumeCreatePieceReadEvent(BatchReadEvent event) {
         log.info("Received UPDATE PIECE BATCH event: {}", event.getPieceProductUuid());
         pieceReadService.createPieceBatchRead(CreateBatchEventDto.from(event));
