@@ -23,8 +23,8 @@ public class FundingController {
     public BaseResponseEntity<GetFundingUuidListResponseVo> getFundingFilterUuid(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String main,
-            @RequestParam(required = false) String sub,
+            @RequestParam(required = false) Integer main,
+            @RequestParam(required = false) Integer sub,
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "ID") SortBy sortBy,
             @RequestParam(defaultValue = "desc") String direction
