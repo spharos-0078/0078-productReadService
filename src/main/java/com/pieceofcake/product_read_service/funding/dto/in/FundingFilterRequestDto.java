@@ -9,8 +9,8 @@ import org.springframework.data.domain.Pageable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FundingFilterRequestDto {
-    private String main;
-    private String sub;
+    private Integer main;
+    private Integer sub;
     private String name;
     Pageable pageable;
 }
