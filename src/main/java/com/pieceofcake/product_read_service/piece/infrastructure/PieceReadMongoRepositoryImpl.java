@@ -24,24 +24,16 @@ public class PieceReadMongoRepositoryImpl implements PieceReadMongoRepository {
 
         query.addCriteria(Criteria.where("pieceRead").ne(null));
 
-        if (dto.getMain() != null && !dto.getMain().isEmpty()) {
-            query.addCriteria(Criteria.where("mainCategory.categoryName").is(dto.getMain()));
+        if (dto.getMain() != null) {
+            query.addCriteria(Criteria.where("mainCategory.categoryId").is(dto.getMain()));
         }
-        if (dto.getSub() != null && !dto.getSub().isEmpty()) {
-            query.addCriteria(Criteria.where("subCategory.categoryName").is(dto.getSub()));
+        if (dto.getSub() != null) {
+            query.addCriteria(Criteria.where("subCategory.categoryId").is(dto.getSub()));
         }
         if (dto.getName() != null && !dto.getName().isEmpty()) {
-            query.addCriteria(Criteria.where("productName").regex(dto.getName(), "i")); // 대소문자 무시
+            query.addCriteria(Criteria.where("productName").regex(dto.getName(), "i"));
         }
 
-//        // 정렬 정보 적용
-//        if (dto.getPageable().getSort().isSorted()) {
-//            for (Sort.Order order : dto.getPageable().getSort()) {
-//                query.with(Sort.by(order));
-//            }
-//        }
-
-        // 정렬
         if (dto.getPageable().getSort().isSorted()) {
             query.with(dto.getPageable().getSort());
         }
