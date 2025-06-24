@@ -6,4 +6,5 @@ import org.springframework.data.domain.Page;
 
 public interface FundingReadMongoRepository{
     Page<ProductRead> searchWithFilters(FundingFilterRequestDto dto);
+    void updateRemainPieces(String fundingUuid, int remainPieces);
 }

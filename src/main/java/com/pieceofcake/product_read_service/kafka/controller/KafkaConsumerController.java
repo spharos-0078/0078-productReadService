@@ -2,6 +2,7 @@ package com.pieceofcake.product_read_service.kafka.controller;
 
 import com.pieceofcake.product_read_service.funding.application.FundingReadService;
 import com.pieceofcake.product_read_service.funding.dto.in.CreateFundingEventDto;
+import com.pieceofcake.product_read_service.funding.dto.in.UpdateRemainPiecesEventDto;
 import com.pieceofcake.product_read_service.kafka.event.BatchReadEvent;
 import com.pieceofcake.product_read_service.kafka.event.FundingReadEvent;
 import com.pieceofcake.product_read_service.kafka.event.PieceReadEvent;
@@ -52,8 +53,14 @@ public class KafkaConsumerController {
 
     @KafkaListener(topics = "delete-funding", groupId = "delete-funding-read-group", containerFactory = "fundingReadEventListener")
     public void consumeDeleteFundingReadEvent(FundingReadEvent event) {
-        log.info("Received DELETE FUNDING PRODUCT-UUID: {}", event.getProductUuid());
+        log.info("Received DELETE FUNDING event: {}", event);
         fundingReadService.deleteFundingRead(event.getProductUuid());
+    }
+
+    @KafkaListener(topics = "remain-funding", groupId = "update-remain-funding-read-group", containerFactory = "fundingReadEventListener")
+    public void consumeRemainFundingReadEvent(FundingReadEvent event) {
+        log.info("Received REMAIN FUNDING event: {}", event);
+        fundingReadService.updateRemainPieces(UpdateRemainPiecesEventDto.from(event));
     }
 
     @KafkaListener(topics = "create-piece-product", groupId = "create-piece-read-group", containerFactory = "pieceReadEventListener")
