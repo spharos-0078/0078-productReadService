@@ -36,9 +36,7 @@ public class FundingReadMongoRepositoryImpl implements FundingReadMongoRepositor
 
         // 정렬 정보 적용
         if (dto.getPageable().getSort().isSorted()) {
-            for (Sort.Order order : dto.getPageable().getSort()) {
-                query.with(Sort.by(order));
-            }
+            query.with(dto.getPageable().getSort());
         }
 
         long total = mongoTemplate.count(query, ProductReadMongoEntity.class);
