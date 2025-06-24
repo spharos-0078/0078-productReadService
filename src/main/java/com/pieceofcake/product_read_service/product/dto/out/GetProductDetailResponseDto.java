@@ -1,6 +1,6 @@
 package com.pieceofcake.product_read_service.product.dto.out;
 
-import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
+import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import com.pieceofcake.product_read_service.product.vo.out.GetProductDetailResponseVo;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class GetProductDetailResponseDto {
     }
 
 
-    public static GetProductDetailResponseDto from(ProductReadMongoEntity productRead) {
+    public static GetProductDetailResponseDto from(ProductRead productRead) {
         return GetProductDetailResponseDto.builder()
                 .productName(productRead.getProductName())
                 .aiEstimatedPrice(productRead.getAiEstimatedPrice())

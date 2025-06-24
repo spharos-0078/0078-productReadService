@@ -9,14 +9,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @NoArgsConstructor
 @Document(collection = "product_category_read")
-public class CategoryReadEntity {
+public class CategoryRead {
     @Id
     private String id;
     private Integer categoryId;
     private String categoryName;
 
     @Builder
-    public CategoryReadEntity(String id, Integer categoryId, String categoryName) {
+    public CategoryRead(String id, Integer categoryId, String categoryName) {
         this.id = id;
         this.categoryId = categoryId;
         this.categoryName = categoryName;

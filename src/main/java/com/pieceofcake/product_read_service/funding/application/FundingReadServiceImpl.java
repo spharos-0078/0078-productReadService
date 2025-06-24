@@ -5,11 +5,12 @@ import com.pieceofcake.product_read_service.common.exception.BaseException;
 import com.pieceofcake.product_read_service.funding.dto.in.CreateFundingEventDto;
 import com.pieceofcake.product_read_service.funding.dto.in.FundingFilterRequestDto;
 import com.pieceofcake.product_read_service.funding.dto.out.GetFundingDetailResponseDto;
+import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import com.pieceofcake.product_read_service.funding.dto.out.GetFundingUuidListResponseDto;
-import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
 import com.pieceofcake.product_read_service.product.infrastructure.ProductReadMongoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -41,7 +42,7 @@ public class FundingReadServiceImpl implements FundingReadService {
 
     @Override
     public void createFundingRead(CreateFundingEventDto createFundingEventDto) {
-        ProductReadMongoEntity product = productReadMongoRepository.findByProductUuid(createFundingEventDto.getProductUuid())
+        ProductRead product = productReadMongoRepository.findByProductUuid(createFundingEventDto.getProductUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_FUNDING));
         product.createFundingRead(createFundingEventDto.toEntity());
         productReadMongoRepository.save(product);
@@ -49,7 +50,7 @@ public class FundingReadServiceImpl implements FundingReadService {
 
     @Override
     public void deleteFundingRead(String productUuid) {
-        ProductReadMongoEntity product = productReadMongoRepository.findByProductUuid(productUuid)
+        ProductRead product = productReadMongoRepository.findByProductUuid(productUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_FUNDING));
 
         product.createFundingRead(null);

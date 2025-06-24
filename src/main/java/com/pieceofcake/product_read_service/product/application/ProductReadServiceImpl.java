@@ -5,12 +5,10 @@ import com.pieceofcake.product_read_service.common.exception.BaseException;
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
 import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
 import com.pieceofcake.product_read_service.product.dto.out.GetProductDetailResponseDto;
-import com.pieceofcake.product_read_service.product.entity.ProductReadMongoEntity;
+import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import com.pieceofcake.product_read_service.product.infrastructure.ProductReadMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +23,7 @@ public class ProductReadServiceImpl implements ProductReadService {
 
     @Override
     public void updateProductRead(UpdateProductEventDto updateProductEventDto) {
-        ProductReadMongoEntity productRead = productReadMongoRepository.findByProductUuid(updateProductEventDto.getProductUuid())
+        ProductRead productRead = productReadMongoRepository.findByProductUuid(updateProductEventDto.getProductUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT));
 
         productReadMongoRepository.save(updateProductEventDto.toEntity(productRead));
@@ -38,7 +36,7 @@ public class ProductReadServiceImpl implements ProductReadService {
 
     @Override
     public GetProductDetailResponseDto getProductDetail(String productUuid) {
-        ProductReadMongoEntity productRead = productReadMongoRepository.findByProductUuid(productUuid)
+        ProductRead productRead = productReadMongoRepository.findByProductUuid(productUuid)
                 .orElseThrow(() ->  new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT));
 
         return GetProductDetailResponseDto.from(productRead);

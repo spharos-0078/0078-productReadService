@@ -1,6 +1,7 @@
 package com.pieceofcake.product_read_service.product.entity;
 
 import com.pieceofcake.product_read_service.funding.entity.FundingRead;
+import com.pieceofcake.product_read_service.piece.entity.PieceRead;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Document(collection = "product_read")
-public class ProductReadMongoEntity {
+public class ProductRead {
     @Id
     private String id;
     private String productName;
@@ -23,15 +24,17 @@ public class ProductReadMongoEntity {
     private String productStatus;
     private String storageLocation;
     private String description;
-    private List<ProductReadImageEntity> images;
-    private CategoryReadEntity mainCategory;
-    private CategoryReadEntity subCategory;
+    private List<ProductImageRead> images;
+    private CategoryRead mainCategory;
+    private CategoryRead subCategory;
     private FundingRead fundingRead;
+    private PieceRead pieceRead;
 
     @Builder
-    public ProductReadMongoEntity(String id, String productName, String productUuid, Long aiEstimatedPrice, String aiEstimatedDescription,
-                                  Long purchasePrice, String productStatus, String storageLocation, String description,
-                                  List<ProductReadImageEntity> images, CategoryReadEntity mainCategory, CategoryReadEntity subCategory,  FundingRead fundingRead) {
+    public ProductRead(String id, String productName, String productUuid, Long aiEstimatedPrice, String aiEstimatedDescription,
+                       Long purchasePrice, String productStatus, String storageLocation, String description,
+                       List<ProductImageRead> images, CategoryRead mainCategory, CategoryRead subCategory,
+                       FundingRead fundingRead, PieceRead pieceRead) {
         this.id = id;
         this.productName = productName;
         this.productUuid = productUuid;
@@ -45,9 +48,14 @@ public class ProductReadMongoEntity {
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
         this.fundingRead = fundingRead;
+        this.pieceRead = pieceRead;
     }
 
     public void createFundingRead(FundingRead fundingRead) {
         this.fundingRead = fundingRead;
+    }
+
+    public void createPieceRead(PieceRead pieceRead) {
+        this.pieceRead = pieceRead;
     }
 }
