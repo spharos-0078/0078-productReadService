@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -22,10 +23,27 @@ public class CreateProductEventDto {
     private List<CreateProductImageEventDto> images;
     private CreateCategoryEventDto mainCategory;
     private CreateCategoryEventDto subCategory;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+//    @Builder
+//    public CreateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, String aiEstimatedDescription,
+//                                 Long purchasePrice, String productStatus, String storageLocation, String description, List<CreateProductImageEventDto> images, CreateCategoryEventDto mainCategory, CreateCategoryEventDto subCategory) {
+//        this.productUuid = productUuid;
+//        this.productName = productName;
+//        this.aiEstimatedPrice = aiEstimatedPrice;
+//        this.aiEstimatedDescription = aiEstimatedDescription;
+//        this.purchasePrice = purchasePrice;
+//        this.productStatus = productStatus;
+//        this.storageLocation = storageLocation;
+//        this.description = description;
+//        this.images = images;
+//        this.mainCategory = mainCategory;
+//        this.subCategory = subCategory;
+//    }
 
     @Builder
-    public CreateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, String aiEstimatedDescription,
-                                 Long purchasePrice, String productStatus, String storageLocation, String description, List<CreateProductImageEventDto> images, CreateCategoryEventDto mainCategory, CreateCategoryEventDto subCategory) {
+    public CreateProductEventDto(String productUuid, String productName, Long aiEstimatedPrice, String aiEstimatedDescription, Long purchasePrice, String productStatus, String storageLocation, String description, List<CreateProductImageEventDto> images, CreateCategoryEventDto mainCategory, CreateCategoryEventDto subCategory, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productUuid = productUuid;
         this.productName = productName;
         this.aiEstimatedPrice = aiEstimatedPrice;
@@ -37,6 +55,8 @@ public class CreateProductEventDto {
         this.images = images;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public static CreateProductEventDto from(ProductReadEvent productReadEvent) {
@@ -52,6 +72,8 @@ public class CreateProductEventDto {
                 .images(productReadEvent.getImages().stream().map(CreateProductImageEventDto::from).toList())
                 .mainCategory(CreateCategoryEventDto.from(productReadEvent.getMainCategory()))
                 .subCategory(CreateCategoryEventDto.from(productReadEvent.getSubCategory()))
+                .createdAt(productReadEvent.getCreatedAt())
+                .updatedAt(productReadEvent.getUpdatedAt())
                 .build();
     }
 
@@ -68,6 +90,8 @@ public class CreateProductEventDto {
                 .images(images.stream().map(CreateProductImageEventDto::toEntity).toList())
                 .mainCategory(mainCategory.toEntity())
                 .subCategory(subCategory.toEntity())
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .build();
     }
 }

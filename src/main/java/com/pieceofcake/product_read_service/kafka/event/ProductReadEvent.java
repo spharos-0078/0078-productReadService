@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ToString
@@ -24,4 +25,6 @@ public class ProductReadEvent {
     private List<ProductImageReadEvent> images;
     private CategoryReadEvent mainCategory;
     private CategoryReadEvent subCategory;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
