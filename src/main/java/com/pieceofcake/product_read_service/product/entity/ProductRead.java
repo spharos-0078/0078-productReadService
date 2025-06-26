@@ -63,4 +63,8 @@ public class ProductRead {
     public void createPieceRead(PieceRead pieceRead) {
         this.pieceRead = pieceRead;
     }
+
+    public void updateProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus.name();
+    }
 }
