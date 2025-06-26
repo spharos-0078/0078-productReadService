@@ -10,4 +10,5 @@ public class PieceReadEvent {
     String productUuid;
     String pieceProductUuid;
     Boolean isTrading;
+    String status;
 }

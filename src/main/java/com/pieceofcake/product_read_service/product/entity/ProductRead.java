@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -29,12 +30,14 @@ public class ProductRead {
     private CategoryRead subCategory;
     private FundingRead fundingRead;
     private PieceRead pieceRead;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Builder
     public ProductRead(String id, String productName, String productUuid, Long aiEstimatedPrice, String aiEstimatedDescription,
                        Long purchasePrice, String productStatus, String storageLocation, String description,
                        List<ProductImageRead> images, CategoryRead mainCategory, CategoryRead subCategory,
-                       FundingRead fundingRead, PieceRead pieceRead) {
+                       FundingRead fundingRead, PieceRead pieceRead, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.productName = productName;
         this.productUuid = productUuid;
@@ -49,6 +52,8 @@ public class ProductRead {
         this.subCategory = subCategory;
         this.fundingRead = fundingRead;
         this.pieceRead = pieceRead;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public void createFundingRead(FundingRead fundingRead) {
