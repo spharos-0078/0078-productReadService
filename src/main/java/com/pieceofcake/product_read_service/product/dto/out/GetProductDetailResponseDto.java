@@ -13,28 +13,37 @@ public class GetProductDetailResponseDto {
     private Long aiEstimatedPrice;
     private String aiEstimatedDescription;
     private String description;
+    private Long purchasePrice;
+    private String productStatus;
+    private String storageLocation;
     private List<GetProductImageResponseDto> images;
     private GetCategoryResponseDto mainCategory;
     private GetCategoryResponseDto subCategory;
 
     @Builder
     public GetProductDetailResponseDto(String productName, Long aiEstimatedPrice, String aiEstimatedDescription, String description,
-                                       List<GetProductImageResponseDto> images, GetCategoryResponseDto mainCategory, GetCategoryResponseDto subCategory) {
+                                       Long purchasePrice, String productStatus, String storageLocation, List<GetProductImageResponseDto> images,
+                                       GetCategoryResponseDto mainCategory, GetCategoryResponseDto subCategory) {
         this.productName = productName;
         this.aiEstimatedPrice = aiEstimatedPrice;
         this.aiEstimatedDescription = aiEstimatedDescription;
         this.description = description;
+        this.purchasePrice = purchasePrice;
+        this.productStatus = productStatus;
+        this.storageLocation = storageLocation;
         this.images = images;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
     }
-
 
     public static GetProductDetailResponseDto from(ProductRead productRead) {
         return GetProductDetailResponseDto.builder()
                 .productName(productRead.getProductName())
                 .aiEstimatedPrice(productRead.getAiEstimatedPrice())
                 .aiEstimatedDescription(productRead.getAiEstimatedDescription())
+                .productStatus(productRead.getProductStatus())
+                .purchasePrice(productRead.getPurchasePrice())
+                .storageLocation(productRead.getStorageLocation())
                 .description(productRead.getDescription())
                 .images(productRead.getImages().stream().map(GetProductImageResponseDto::from).toList())
                 .mainCategory(GetCategoryResponseDto.from(productRead.getMainCategory()))
@@ -47,6 +56,9 @@ public class GetProductDetailResponseDto {
                 .productName(productName)
                 .aiEstimatedPrice(aiEstimatedPrice)
                 .aiEstimatedDescription(aiEstimatedDescription)
+                .productStatus(productStatus)
+                .purchasePrice(purchasePrice)
+                .storageLocation(storageLocation)
                 .description(description)
                 .images(images.stream().map(GetProductImageResponseDto::toVo).toList())
                 .mainCategory(mainCategory.toVo())
