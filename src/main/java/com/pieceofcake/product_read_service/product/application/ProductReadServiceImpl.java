@@ -7,6 +7,7 @@ import com.pieceofcake.product_read_service.piece.dto.out.GetPieceUuidListRespon
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
 import com.pieceofcake.product_read_service.product.dto.in.GetProductFilterRequestDto;
 import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
+import com.pieceofcake.product_read_service.product.dto.in.UpdateProductStatusEventDto;
 import com.pieceofcake.product_read_service.product.dto.out.GetProductDetailResponseDto;
 import com.pieceofcake.product_read_service.product.dto.out.GetProductUuidListResponseDto;
 import com.pieceofcake.product_read_service.product.entity.ProductRead;
@@ -55,10 +56,12 @@ public class ProductReadServiceImpl implements ProductReadService {
     }
 
     @Override
-    public void updateProductStatus(String productUuid, ProductStatus productStatus) {
-        ProductRead product = productReadMongoRepository.findByProductUuid(productUuid)
+    public void updateProductStatus(UpdateProductStatusEventDto updateProductStatusEventDto) {
+        ProductRead product = productReadMongoRepository.findByProductUuid(updateProductStatusEventDto.getProductUuid())
                 .orElseThrow(() ->  new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT));
 
-        product.updateProductStatus(productStatus);
+        product.updateProductStatus(updateProductStatusEventDto.getProductStatus());
+
+        productReadMongoRepository.save(product);
     }
 }

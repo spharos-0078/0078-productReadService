@@ -64,7 +64,7 @@ public class ProductRead {
         this.pieceRead = pieceRead;
     }
 
-    public void updateProductStatus(ProductStatus productStatus) {
-        this.productStatus = productStatus.name();
+    public void updateProductStatus(String productStatus) {
+        this.productStatus = productStatus;
     }
 }
