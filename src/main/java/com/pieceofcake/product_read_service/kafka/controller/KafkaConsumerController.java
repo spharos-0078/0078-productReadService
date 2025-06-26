@@ -3,10 +3,7 @@ package com.pieceofcake.product_read_service.kafka.controller;
 import com.pieceofcake.product_read_service.funding.application.FundingReadService;
 import com.pieceofcake.product_read_service.funding.dto.in.CreateFundingEventDto;
 import com.pieceofcake.product_read_service.funding.dto.in.UpdateRemainPiecesEventDto;
-import com.pieceofcake.product_read_service.kafka.event.BatchReadEvent;
-import com.pieceofcake.product_read_service.kafka.event.FundingReadEvent;
-import com.pieceofcake.product_read_service.kafka.event.PieceReadEvent;
-import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
+import com.pieceofcake.product_read_service.kafka.event.*;
 import com.pieceofcake.product_read_service.piece.application.PieceReadServiceImpl;
 import com.pieceofcake.product_read_service.piece.dto.in.CreateBatchEventDto;
 import com.pieceofcake.product_read_service.piece.dto.in.CreatePieceEventDto;
@@ -14,6 +11,7 @@ import com.pieceofcake.product_read_service.piece.entity.PieceStatus;
 import com.pieceofcake.product_read_service.product.application.ProductReadServiceImpl;
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
 import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
+import com.pieceofcake.product_read_service.product.dto.in.UpdateProductStatusEventDto;
 import com.pieceofcake.product_read_service.product.entity.ProductStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -102,5 +100,11 @@ public class KafkaConsumerController {
     public void onAuctionClose(String productUuid) {
         System.out.println("Received auction-close event for auctionUuid=@@@@@@@" + productUuid);
         pieceReadService.updatePieceStatus(productUuid, PieceStatus.NONE);
+    }
+
+    @KafkaListener(topics = "update-product-status", groupId = "product-status-read-group", containerFactory = "productStatusEventListener")
+    public void updateProductStatus(ProductStatusEvent productStatusEvent) {
+        System.out.println("Received product-status event for productUuid=@@@@@@@" + productStatusEvent.getProductUuid());
+        productReadService.updateProductStatus(UpdateProductStatusEventDto.from(productStatusEvent));
     }
 }

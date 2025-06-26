@@ -4,6 +4,7 @@ import com.pieceofcake.product_read_service.funding.dto.out.GetFundingDetailResp
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
 import com.pieceofcake.product_read_service.product.dto.in.GetProductFilterRequestDto;
 import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
+import com.pieceofcake.product_read_service.product.dto.in.UpdateProductStatusEventDto;
 import com.pieceofcake.product_read_service.product.dto.out.GetProductDetailResponseDto;
 import com.pieceofcake.product_read_service.product.dto.out.GetProductUuidListResponseDto;
 import com.pieceofcake.product_read_service.product.entity.ProductStatus;
@@ -21,5 +22,5 @@ public interface ProductReadService {
 
     GetProductUuidListResponseDto getProductFilterUuid(GetProductFilterRequestDto from);
 
-    void updateProductStatus(String productUuid, ProductStatus productStatus);
+    void updateProductStatus(UpdateProductStatusEventDto updateProductStatusEventDto);
 }
