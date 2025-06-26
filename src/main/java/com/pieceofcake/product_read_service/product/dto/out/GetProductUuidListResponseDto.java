@@ -1,6 +1,5 @@
 package com.pieceofcake.product_read_service.product.dto.out;
 
-import com.pieceofcake.product_read_service.piece.vo.out.GetPieceUuidListResponseVo;
 import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import com.pieceofcake.product_read_service.product.vo.out.GetProductUuidListResponseVo;
 import lombok.Builder;
