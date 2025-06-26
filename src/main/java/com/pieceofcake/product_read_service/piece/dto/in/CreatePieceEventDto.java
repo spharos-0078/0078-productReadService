@@ -10,12 +10,14 @@ public class CreatePieceEventDto {
     private String productUuid;
     private String pieceProductUuid;
     private Boolean isTrading;
+    private String status;
 
     @Builder
-    public CreatePieceEventDto(String productUuid, String pieceProductUuid, Boolean isTrading) {
+    public CreatePieceEventDto(String productUuid, String pieceProductUuid, Boolean isTrading, String status) {
         this.productUuid = productUuid;
         this.pieceProductUuid = pieceProductUuid;
         this.isTrading = isTrading;
+        this.status = status;
     }
 
     public static CreatePieceEventDto from(PieceReadEvent event) {
@@ -23,6 +25,7 @@ public class CreatePieceEventDto {
                 .productUuid(event.getProductUuid())
                 .pieceProductUuid(event.getPieceProductUuid())
                 .isTrading(event.getIsTrading())
+                .status(event.getStatus())
                 .build();
     }
 
@@ -30,6 +33,7 @@ public class CreatePieceEventDto {
         return PieceRead.builder()
                 .pieceProductUuid(pieceProductUuid)
                 .isTrading(isTrading)
+                .pieceProductStatus(status)
                 .build();
     }
 }

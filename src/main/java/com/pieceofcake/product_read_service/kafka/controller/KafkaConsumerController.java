@@ -10,9 +10,11 @@ import com.pieceofcake.product_read_service.kafka.event.ProductReadEvent;
 import com.pieceofcake.product_read_service.piece.application.PieceReadServiceImpl;
 import com.pieceofcake.product_read_service.piece.dto.in.CreateBatchEventDto;
 import com.pieceofcake.product_read_service.piece.dto.in.CreatePieceEventDto;
+import com.pieceofcake.product_read_service.piece.entity.PieceStatus;
 import com.pieceofcake.product_read_service.product.application.ProductReadServiceImpl;
 import com.pieceofcake.product_read_service.product.dto.in.CreateProductEventDto;
 import com.pieceofcake.product_read_service.product.dto.in.UpdateProductEventDto;
+import com.pieceofcake.product_read_service.product.entity.ProductStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -73,5 +75,32 @@ public class KafkaConsumerController {
     public void consumeCreatePieceReadEvent(BatchReadEvent event) {
         log.info("Received UPDATE PIECE BATCH event: {}", event.getPieceProductUuid());
         pieceReadService.createPieceBatchRead(CreateBatchEventDto.from(event));
+    }
+
+    @KafkaListener(topics = "vote-start", groupId = "vote-start-group", containerFactory = "stringEventListener")
+    public void onVoteStart(String productUuid) {
+        // TODO: 메시지 처리 로직 (예: Vote 상태 업데이트, 알림 발송 등)
+        System.out.println("Received vote-close event for voteUuid=@@@@@@@" + productUuid);
+        pieceReadService.updatePieceStatus(productUuid, PieceStatus.VOTE);
+    }
+
+    @KafkaListener(topics = "vote-close", groupId = "vote-close-group", containerFactory = "stringEventListener")
+    public void onVoteClose(String productUuid) {
+        // TODO: 메시지 처리 로직 (예: Vote 상태 업데이트, 알림 발송 등)
+        System.out.println("Received vote-close event for voteUuid=@@@@@@@" + productUuid);
+        pieceReadService.updatePieceStatus(productUuid, PieceStatus.NONE);
+    }
+
+    @KafkaListener(topics = "auction-start", groupId = "auction-start-group", containerFactory = "stringEventListener")
+    public void onAuctionStart(String productUuid) {
+        // TODO: 메시지 처리 로직 (예: Vote 상태 업데이트, 알림 발송 등)
+        System.out.println("Received vote-close event for voteUuid=@@@@@@@" + productUuid);
+        pieceReadService.updatePieceStatus(productUuid, PieceStatus.AUCTION);
+    }
+
+    @KafkaListener(topics = "auction-close", groupId = "auction-close-group", containerFactory = "stringEventListener")
+    public void onAuctionClose(String productUuid) {
+        System.out.println("Received auction-close event for auctionUuid=@@@@@@@" + productUuid);
+        pieceReadService.updatePieceStatus(productUuid, PieceStatus.NONE);
     }
 }

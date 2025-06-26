@@ -7,6 +7,7 @@ import com.pieceofcake.product_read_service.piece.dto.in.CreatePieceEventDto;
 import com.pieceofcake.product_read_service.piece.dto.in.GetPieceFilterRequestDto;
 import com.pieceofcake.product_read_service.piece.dto.out.GetPieceDetailResponseDto;
 import com.pieceofcake.product_read_service.piece.dto.out.GetPieceUuidListResponseDto;
+import com.pieceofcake.product_read_service.piece.entity.PieceStatus;
 import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import com.pieceofcake.product_read_service.product.infrastructure.ProductReadMongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,15 @@ public class PieceReadServiceImpl implements PieceReadService {
     public GetPieceDetailResponseDto getPieceDetail(String pieceProductUuid) {
         return GetPieceDetailResponseDto.from(productReadMongoRepository.findByPieceRead_PieceProductUuid(pieceProductUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_FUNDING)));
+    }
+
+    @Override
+    public void updatePieceStatus(String productUuid, PieceStatus pieceStatus) {
+        ProductRead product = productReadMongoRepository.findByProductUuid(productUuid)
+                .orElseThrow(() ->  new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT));
+
+        product.getPieceRead().updateStatus(pieceStatus);
+
+        productReadMongoRepository.save(product);
     }
 }
