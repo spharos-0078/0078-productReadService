@@ -76,30 +76,30 @@ public class KafkaConsumerController {
     }
 
     @KafkaListener(topics = "vote-start", groupId = "vote-start-group", containerFactory = "stringEventListener")
-    public void onVoteStart(String productUuid) {
+    public void onVoteStart(String pieceProductUuid) {
         // TODO: 메시지 처리 로직 (예: Vote 상태 업데이트, 알림 발송 등)
-        System.out.println("Received vote-close event for voteUuid=@@@@@@@" + productUuid);
-        pieceReadService.updatePieceStatus(productUuid, PieceStatus.VOTE);
+        System.out.println("Received vote-start event for voteUuid=@@@@@@@" + pieceProductUuid);
+        pieceReadService.updatePieceStatus(pieceProductUuid, PieceStatus.VOTE);
     }
 
     @KafkaListener(topics = "vote-close", groupId = "vote-close-group", containerFactory = "stringEventListener")
-    public void onVoteClose(String productUuid) {
+    public void onVoteClose(String pieceProductUuid) {
         // TODO: 메시지 처리 로직 (예: Vote 상태 업데이트, 알림 발송 등)
-        System.out.println("Received vote-close event for voteUuid=@@@@@@@" + productUuid);
-        pieceReadService.updatePieceStatus(productUuid, PieceStatus.NONE);
+        System.out.println("Received vote-close event for voteUuid=@@@@@@@" + pieceProductUuid);
+        pieceReadService.updatePieceStatus(pieceProductUuid, PieceStatus.NONE);
     }
 
     @KafkaListener(topics = "auction-start", groupId = "auction-start-group", containerFactory = "stringEventListener")
-    public void onAuctionStart(String productUuid) {
+    public void onAuctionStart(String pieceProductUuid) {
         // TODO: 메시지 처리 로직 (예: Vote 상태 업데이트, 알림 발송 등)
-        System.out.println("Received vote-close event for voteUuid=@@@@@@@" + productUuid);
-        pieceReadService.updatePieceStatus(productUuid, PieceStatus.AUCTION);
+        System.out.println("Received auction-start event for voteUuid=@@@@@@@" + pieceProductUuid);
+        pieceReadService.updatePieceStatus(pieceProductUuid, PieceStatus.AUCTION);
     }
 
     @KafkaListener(topics = "auction-close", groupId = "auction-close-group", containerFactory = "stringEventListener")
-    public void onAuctionClose(String productUuid) {
-        System.out.println("Received auction-close event for auctionUuid=@@@@@@@" + productUuid);
-        pieceReadService.updatePieceStatus(productUuid, PieceStatus.NONE);
+    public void onAuctionClose(String pieceProductUuid) {
+        System.out.println("Received auction-close event for auctionUuid=@@@@@@@" + pieceProductUuid);
+        pieceReadService.updatePieceStatus(pieceProductUuid, PieceStatus.NONE);
     }
 
     @KafkaListener(topics = "update-product-status", groupId = "product-status-read-group", containerFactory = "productStatusEventListener")

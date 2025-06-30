@@ -25,7 +25,7 @@ public class PieceReadServiceImpl implements PieceReadService {
     public void createPieceRead(CreatePieceEventDto createPieceEventDto) {
         ProductRead product = productReadMongoRepository.findByProductUuid(createPieceEventDto.getProductUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT));
-
+        product.getFundingRead().updateFundingReadStatus("COMPLETED");
         product.createPieceRead(createPieceEventDto.toEntity());
         productReadMongoRepository.save(product);
     }
@@ -48,12 +48,12 @@ public class PieceReadServiceImpl implements PieceReadService {
     @Override
     public GetPieceDetailResponseDto getPieceDetail(String pieceProductUuid) {
         return GetPieceDetailResponseDto.from(productReadMongoRepository.findByPieceRead_PieceProductUuid(pieceProductUuid)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_FUNDING)));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_PIECE_PRODUCT)));
     }
 
     @Override
-    public void updatePieceStatus(String productUuid, PieceStatus pieceStatus) {
-        ProductRead product = productReadMongoRepository.findByProductUuid(productUuid)
+    public void updatePieceStatus(String pieceProductUuid, PieceStatus pieceStatus) {
+        ProductRead product = productReadMongoRepository.findByPieceRead_PieceProductUuid(pieceProductUuid)
                 .orElseThrow(() ->  new BaseException(BaseResponseStatus.NO_EXIST_PRODUCT));
 
         product.getPieceRead().updateStatus(pieceStatus);

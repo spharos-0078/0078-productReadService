@@ -29,4 +29,8 @@ public class FundingRead {
         this.fundingDeadline = fundingDeadline;
         this.fundingStatus = fundingStatus;
     }
+
+    public void updateFundingReadStatus(String fundingStatus) {
+        this.fundingStatus = fundingStatus;
+    }
 }
