@@ -101,10 +101,4 @@ public class KafkaConsumerController {
         System.out.println("Received auction-close event for auctionUuid=@@@@@@@" + pieceProductUuid);
         pieceReadService.updatePieceStatus(pieceProductUuid, PieceStatus.NONE);
     }
-
-    @KafkaListener(topics = "update-product-status", groupId = "product-status-read-group", containerFactory = "productStatusEventListener")
-    public void updateProductStatus(ProductStatusEvent productStatusEvent) {
-        System.out.println("Received product-status event for productUuid=@@@@@@@" + productStatusEvent.getProductUuid());
-        productReadService.updateProductStatus(UpdateProductStatusEventDto.from(productStatusEvent));
-    }
 }
