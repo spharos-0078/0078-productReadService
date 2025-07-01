@@ -8,6 +8,7 @@ import com.pieceofcake.product_read_service.funding.dto.in.UpdateRemainPiecesEve
 import com.pieceofcake.product_read_service.funding.dto.out.GetFundingDetailResponseDto;
 import com.pieceofcake.product_read_service.product.entity.ProductRead;
 import com.pieceofcake.product_read_service.funding.dto.out.GetFundingUuidListResponseDto;
+import com.pieceofcake.product_read_service.product.entity.ProductStatus;
 import com.pieceofcake.product_read_service.product.infrastructure.ProductReadMongoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class FundingReadServiceImpl implements FundingReadService {
         ProductRead product = productReadMongoRepository.findByProductUuid(createFundingEventDto.getProductUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_FUNDING));
         product.createFundingRead(createFundingEventDto.toEntity());
+        product.updateProductStatus(ProductStatus.FUNDING.name());
         productReadMongoRepository.save(product);
     }
 
@@ -47,6 +49,7 @@ public class FundingReadServiceImpl implements FundingReadService {
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_FUNDING));
 
         product.createFundingRead(null);
+        product.updateProductStatus(ProductStatus.FUNDING_CANCEL.name());
         productReadMongoRepository.save(product);
     }
 
