@@ -32,6 +32,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.kafka:spring-kafka'
+	
+	// Redis 캐싱 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	
+	// Spring Boot Actuator 추가
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	
+	// Elasticsearch 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'

@@ -1,0 +1,25 @@
+{
+  "analysis": {
+    "analyzer": {
+      "korean_analyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "korean_stop",
+          "korean_stemmer"
+        ]
+      }
+    },
+    "filter": {
+      "korean_stop": {
+        "type": "stop",
+        "stopwords": ["그", "이", "저", "것", "수", "등", "및", "또는", "그리고", "하지만", "그러나"]
+      },
+      "korean_stemmer": {
+        "type": "stemmer",
+        "language": "light_korean"
+      }
+    }
+  }
+} 

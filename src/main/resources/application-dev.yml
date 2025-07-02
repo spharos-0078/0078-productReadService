@@ -4,20 +4,46 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://${EC2_MONGOID}:${EC2_MONGOPW}@spharos.uxnx7ao.mongodb.net/piece_of_cake?retryWrites=true&w=majority
+      uri: ${MONGODB_URI}
       auto-index-creation: true
+      max-connection-pool-size: 100
+      min-connection-pool-size: 5
+      max-connection-idle-time: 30000
+    
+    elasticsearch:
+      uris: ${ELASTICSEARCH_URI}
+      username: ${ELASTICSEARCH_USERNAME}
+      password: ${ELASTICSEARCH_PASSWORD}
+      connection-timeout: 5000
+      socket-timeout: 10000
 
   kafka:
-    bootstrap-servers: ${EC2_HOST2}:10000,${EC2_HOST2}:10001,${EC2_HOST2}:10002
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     consumer:
       group-id: product-read-group
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      security:
+        protocol: SSL
+      ssl:
+        trust-store-location: ${KAFKA_TRUST_STORE_LOCATION}
+        trust-store-password: ${KAFKA_TRUST_STORE_PASSWORD}
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://${EC2_HOST}:8761/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL}
+    eureka-server-connect-timeout-seconds: 5
+    eureka-server-read-timeout-seconds: 8
+
+aws:
+  secrets-manager:
+    region: ap-northeast-2
+    secrets:
+      mongodb: /prod/product-read-service/mongodb
+      kafka: /prod/product-read-service/kafka
+      eureka: /prod/product-read-service/eureka
+      elasticsearch: /prod/product-read-service/elasticsearch

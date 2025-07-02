@@ -26,12 +26,18 @@ public class BaseExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     protected ResponseEntity<BaseResponseEntity<Void>> RuntimeError(RuntimeException e) {
-        BaseResponseEntity<Void> response = new BaseResponseEntity<>(BaseResponseStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        log.error("RuntimeException: ", e);
-        for (StackTraceElement s : e.getStackTrace()) {
-            System.out.println(s);
+        // 보안을 위해 예외 메시지를 노출하지 않음
+        log.error("Unexpected runtime error occurred", e);
+        
+        // 민감한 정보가 포함된 예외는 별도 처리
+        if (e.getMessage() != null && e.getMessage().contains("password")) {
+            log.warn("Password related error detected, masking message");
         }
-        return new ResponseEntity<>(response, response.httpStatus());
+        
+        return new ResponseEntity<>(
+            new BaseResponseEntity<>(BaseResponseStatus.INTERNAL_SERVER_ERROR), 
+            BaseResponseStatus.INTERNAL_SERVER_ERROR.getHttpStatusCode()
+        );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
