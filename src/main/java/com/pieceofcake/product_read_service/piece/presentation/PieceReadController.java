@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("api/v1/piece")
+@RequestMapping("/api/v1/piece")
 @RequiredArgsConstructor
 @RestController
 public class PieceReadController {
