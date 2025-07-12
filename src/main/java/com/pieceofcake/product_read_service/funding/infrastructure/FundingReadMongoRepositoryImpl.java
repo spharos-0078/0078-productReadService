@@ -49,7 +49,7 @@ public class FundingReadMongoRepositoryImpl implements FundingReadMongoRepositor
     @Override
     public void updateRemainPieces(String fundingUuid, int remainPieces) {
         Query query = new Query(Criteria.where("fundingRead.fundingUuid").is(fundingUuid));
-        Update update = new Update().set("fundingRead.remainPieces", remainPieces);
+        Update update = new Update().set("fundingRead.remainingPieces", remainPieces);
         mongoTemplate.updateFirst(query, update, ProductRead.class);
     }
 }
